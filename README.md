@@ -12,23 +12,25 @@ CraftedCart, for their [nITG Documentation Files](https://gitlab.com/CraftedCart
 
 ## Instructions
 
-Drag and drop `.vscode` and `scripts` into your template.
+Drag and drop `scripts` into your template.
 
 Install [Lune](https://lune-org.github.io/docs/getting-started/1-installation) and [luadoc](https://github.com/boolangery/py-lua-doc)
 
 Run the following:
 
 ```bash
-lune setup # you will only need to run this once per project 
 lune run scripts/generate
 ```
 
 ## NOTES
 
-If you're using Luau LSP and a text editor that isn't Visual Studio Code, you'll need to configure your LSP to load the following type definition file:
+If you're using Luau LSP, please use the following configuration:
 
-```lua
-"./scripts/_nITG-luau-defs.d.luau" -- for Luau LSP
+```json
+"luau-lsp.platform.type": "standard",
+"luau-lsp.sourcemap.enabled": false,
+"luau-lsp.sourcemap.autogenerate": false,
+"luau-lsp.types.definitionFiles": [
+    "./scripts/_nITG-luau-defs.d.luau"
+],
 ```
-
-See how [the visual studio code settings file](.vscode/settings.json) is set up.
