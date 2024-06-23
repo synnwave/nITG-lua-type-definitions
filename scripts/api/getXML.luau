@@ -17,7 +17,7 @@ local types = {
 	Model = true,
 	Polygon = true,
 	Sprite = true,
-	Quad = true,
+	--Quad = true, -- TODO: Add support for quad
 }
 
 local function validateLua(str)
