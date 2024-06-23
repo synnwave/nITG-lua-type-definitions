@@ -1,5 +1,7 @@
-/scripts/api/nITG-API.json
-/scripts/api/json/**
+scripts/api/nITG-API.json
+scripts/api/json/**
 
 scripts/_nITG-luau-defs.d.luau
 scripts/_nITG-emmylua-defs.lua
+
+.vscode
