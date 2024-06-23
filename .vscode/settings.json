@@ -7,7 +7,4 @@
   "luau-lsp.types.definitionFiles": [
     "./scripts/_nITG-luau-defs.d.luau"
   ],
-  "Lua.workspace.library": [
-    "./scripts/_nITG-emmylua-defs.lua"
-  ],
 }
