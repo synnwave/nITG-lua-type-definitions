@@ -12,11 +12,11 @@ CraftedCart, for their [nITG Documentation Files](https://gitlab.com/CraftedCart
 
 ## Instructions
 
-Drag and drop `scripts` into your template.
+1. Drag and drop `scripts` into your template.
 
-Install [Lune](https://lune-org.github.io/docs/getting-started/1-installation) and [luadoc](https://github.com/boolangery/py-lua-doc)
+2. Install [Lune](https://lune-org.github.io/docs/getting-started/1-installation) and [luadoc](https://github.com/boolangery/py-lua-doc)
 
-Run the following:
+3. Run the following:
 
 ```bash
 lune run scripts/generate
@@ -29,7 +29,6 @@ If you're using Luau LSP, please use the following configuration:
 ```json
 "luau-lsp.platform.type": "standard",
 "luau-lsp.sourcemap.enabled": false,
-"luau-lsp.sourcemap.autogenerate": false,
 "luau-lsp.types.definitionFiles": [
     "./scripts/_nITG-luau-defs.d.luau"
 ],
