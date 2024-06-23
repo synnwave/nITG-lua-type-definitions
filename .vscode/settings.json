@@ -1,0 +1,8 @@
+{
+  "luau-lsp.types.roblox": false,
+  "luau-lsp.sourcemap.enabled": false,
+  "luau-lsp.sourcemap.autogenerate": false,
+  "luau-lsp.types.definitionFiles": [
+    "./scripts/_nITG-defs.d.luau"
+  ]
+}
