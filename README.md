@@ -1,6 +1,6 @@
 # nITG-lua-type-definitions
 
-This script will generate NotITG Lua types for autocompletion (and type-checking if you're using Luau). 
+This script will generate NotITG Lua types for autocompletion.
 
 This is meant to be used with the [Mirin Template](https://github.com/XeroOl/notitg-mirin)
 
@@ -14,23 +14,22 @@ CraftedCart, for their [nITG Documentation Files](https://gitlab.com/CraftedCart
 
 Drag and drop `.vscode` and `scripts` into your template.
 
-[Install Lune](https://lune-org.github.io/docs/getting-started/1-installation)
-
-[Install luadoc](https://github.com/boolangery/py-lua-doc)
+Install [Lune](https://lune-org.github.io/docs/getting-started/1-installation) and [luadoc](https://github.com/boolangery/py-lua-doc)
 
 Run the following:
 
 ```bash
-lune setup
-lune run scripts/generateDefs
+lune setup # you will only need to run this once per project 
+lune run scripts/generate
 ```
 
 ## NOTES
 
-If you're using a text editor that isn't Visual Studio Code, you'll need to configure Luau LSP to use the type definitions file.
+If you're using a text editor that isn't Visual Studio Code, you'll need to configure your LSP to load one of the following type definition files:
 
-These type definitions are only for [Luau LSP](https://github.com/JohnnyMorganz/luau-lsp).
+```lua
+"./scripts/_nITG-luau-defs.d.luau" -- for Luau LSP
+"./scripts/_nITG-emmylua-defs.lua" -- for Lua LSP (Emmylua)
+```
 
-### Emmylua support will be added soon!!
-
-### Documentation will be added soon!!
+See how [the visual studio code settings file](.vscode/settings.json) is set up.

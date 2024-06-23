@@ -1,5 +1,5 @@
 --!strict
--- lua api stolen from: https://gitlab.com/CraftedCart/notitg_docs/-/tree/master/lua
+-- lua api taken from: https://gitlab.com/CraftedCart/notitg_docs/-/tree/master/lua
 
 local fs = require("@lune/fs")
 local process = require("@lune/process")
@@ -56,7 +56,7 @@ for _, file in fs.readDir(root .. "lua") do
 	if not fs.isFile(cachedJSONPath) then fs.writeFile(cachedJSONPath, fileJSON) end
 
 	local decodedJson = net.jsonDecode(fileJSON)[1]
-	if file == "global.lua" then
+	if file == "global._lua" then
 		for _, var in decodedJson.data do
 			var = var.value
 			outputData.global.vars[var.name] = {
@@ -71,7 +71,7 @@ for _, file in fs.readDir(root .. "lua") do
 		continue
 	end
 
-	if decodedJson.classes then
+	if decodedJson.classes and decodedJson.classes[1] then
 		local thisClass = decodedJson.classes[1]
 		local thisData = {
 			inherits = thisClass.inherits_from[1],

@@ -20,12 +20,9 @@ local types = {
 	--Quad = true, -- TODO: Add support for quad
 }
 
-local function validateLua(str)
-	return (pcall(function() luau.compile(str) end))
-end
+local function validateLua(str) return (pcall(luau.compile, str)) end
 
-return function(inputXML)
-	local out = ""
+return function(inputXML, dontContinue: boolean, callback: (name: string, type: string, headerData: string?) -> ())
 	local strings, i = {}, 0
 	local contents = fs.readFile(inputXML):gsub('".-"', function(str)
 		i += 1
@@ -35,7 +32,7 @@ return function(inputXML)
 
 	local headers = {}
 	for tag, properties in contents:gmatch("[^<]*<([^ \n>=]+) *([^>]-) */?>\n?") do
-		local type = types[tag] and tag or "Actor"
+		local type = if types[tag] then tag else "Actor"
 		local name
 		for prop, id in properties:gmatch('([^=]-) *= *"(%d+)" *') do
 			local body = strings[id]
@@ -50,14 +47,13 @@ return function(inputXML)
 				local header = name:gsub("%.", " = {"):gsub("(%b[])", " = {%1"):gsub("{[^{]*$", "{") .. ("}"):rep(count)
 				local headerName = header:split("=")[1]
 				if not headers[header] and validateLua(header) and headerName then
-					out ..= `\ndeclare {headerName}: \{ {type} }`
+					callback(headerName, type, header)
 					headers[header] = true
 				end
-				continue
+				if dontContinue then continue end
 			end
-			out ..= `\ndeclare {name}: {type}`
+
+			callback(name, type)
 		end
 	end
-
-	return out
 end

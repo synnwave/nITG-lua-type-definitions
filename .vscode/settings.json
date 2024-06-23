@@ -1,8 +1,13 @@
 {
-  "luau-lsp.types.roblox": false,
+  "luau-lsp.platform.type": "standard",
   "luau-lsp.sourcemap.enabled": false,
   "luau-lsp.sourcemap.autogenerate": false,
+
+  
   "luau-lsp.types.definitionFiles": [
-    "./scripts/_nITG-defs.d.luau"
-  ]
+    "./scripts/_nITG-luau-defs.d.luau"
+  ],
+  "Lua.workspace.library": [
+    "./scripts/_nITG-emmylua-defs.lua"
+  ],
 }

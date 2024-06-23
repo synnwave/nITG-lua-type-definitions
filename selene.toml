@@ -3,3 +3,4 @@
 multiple_statements = "allow"
 parenthese_conditions = "allow"
 undefined_variable = "allow"
+unscoped_variables = "allow"
