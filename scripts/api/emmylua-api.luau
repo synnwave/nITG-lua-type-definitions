@@ -86,7 +86,7 @@ return function(jsonData, externalApi, xmlPath)
 		for className, classData in jsonData.classes do
 			local inherits = classData.inherits
 			local startString =
-				`----> CLASS: {toApiLink(className)}{if inherits then ` ({toApiLink(inherits)})` else ""} <----`
+				`-------> CLASS: {toApiLink(className)}{if inherits then ` ({toApiLink(inherits)})` else ""} <----`
 			local thisOutput = "\n\n" .. startString
 
 			thisOutput ..= `\n---@class {className}{if inherits then `: {inherits}` else ""} {toApiLink(className)}`
