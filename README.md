@@ -1,6 +1,6 @@
 # nITG-lua-type-definitions
 
-This script will generate NotITG Lua types for autocompletion.
+This script will generate NotITG Lua types for both Emmylua and Luau autocompletion.
 
 This is meant to be used with the [Mirin Template](https://github.com/XeroOl/notitg-mirin)
 
