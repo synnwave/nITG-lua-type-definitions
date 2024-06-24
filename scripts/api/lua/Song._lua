@@ -278,7 +278,7 @@ function Song:GetGroupName() end
 ---
 --- |since_notitg_v4_0_1|
 ---
---- @return multiple
+--- @return numberArray_numberArray
 function Song:GetTimingData() end
 
 --- Returns the song's genre

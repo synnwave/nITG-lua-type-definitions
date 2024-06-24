@@ -42,7 +42,7 @@ function Polygon:SetVertexPosition(index, x, y, z) end
 ---
 --- @param index int The vertex index (0 indexed)
 ---
---- @return multiple
+--- @return number_number_number
 function Polygon:GetVertexPosition(index) end
 
 --- Sets a vertex's normal
@@ -67,7 +67,7 @@ function Polygon:SetVertexNormal(index, x, y, z) end
 ---
 --- @param index int The vertex index (0 indexed)
 ---
---- @return multiple
+--- @return number_number_number
 function Polygon:GetVertexNormal(index) end
 
 --- Sets a vertex's color
@@ -93,7 +93,7 @@ function Polygon:SetVertexColor(index, r, g, b, a) end
 ---
 --- @param index int The vertex index (0 indexed)
 ---
---- @return multiple
+--- @return number_number_number_number
 function Polygon:GetVertexColor() end
 
 --- Sets a vertex's alpha
@@ -128,7 +128,7 @@ function Polygon:SetVertexTexCoord(index, u, v, w) end
 ---
 --- @param index int The vertex index (0 indexed)
 ---
---- @return multiple
+--- @return number_number_number
 function Polygon:GetVertexTexCoord(index) end
 
 --- Sets the polygon drawing mode (Lines or filled)

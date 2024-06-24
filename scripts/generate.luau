@@ -1,5 +1,10 @@
 local fs = require("@lune/fs")
 local net = require("@lune/net")
+local process = require("@lune/process")
+
+if process.args[1] == "refresh" then
+    fs.removeDir("scripts/api/json")
+end
 
 require("api/makeApi")
 local jsonData = net.jsonDecode(fs.readFile("scripts/api/nITG-API.json"))

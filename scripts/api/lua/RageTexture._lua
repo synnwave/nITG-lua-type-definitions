@@ -62,7 +62,7 @@ function RageTexture:GetSourceHeight() end
 ---
 --- @param frame int The frame number to fetch the rect for (0 indexed)
 ---
---- @return multiple
+--- @return number_number_number_number
 function RageTexture:GetTextureCoordRect(frame) end
 
 --- Returns the filepath where a texture was loaded from

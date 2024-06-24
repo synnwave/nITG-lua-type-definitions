@@ -1,12 +1,14 @@
 local function toLuauType(arg, useNil: boolean?): string
+	arg = arg:gsub("_", ", ") -- we don't have a way to check if the argument is an union or returns multiple values... we will use underscores as commas instead
+	arg = arg:gsub("function", "((...any) -> (...any))")
+	arg = arg:gsub("numberArray", "{ number }"):gsub("stringArray", "{ string }")
+
 	if arg == "array" then
 		arg = "{ any }"
 	elseif arg == "table" then
 		arg = "{ [any]: any }"
 	elseif arg == "void" or arg == "" or arg == " " then
 		arg = if useNil then "nil" else "()"
-	elseif arg == "function" then
-		arg = "(...any) -> (...any)"
 	elseif arg == "multiple" then
 		arg = "...any"
 	elseif arg == "The" or arg == "sync" then -- unknown args (wtf is "The")

@@ -271,7 +271,7 @@ function Actor:GetEffectRotationZ() end
 ---
 --- |since_itg|
 ---
---- @return multiple
+--- @return number_number_number
 function Actor:getrotation() end
 
 --- Returns the actor's current rotation
@@ -284,7 +284,7 @@ function Actor:getrotation() end
 ---
 --- |since_notitg_v4|
 ---
---- @return multiple
+--- @return number_number_number
 function Actor:getcurrentrotation() end
 
 --- Adds ``rotX`` to the actor's X rotation
@@ -1210,7 +1210,7 @@ function Actor:diffuse(r, g, b, a) end
 ---
 --- |since_notitg_v3|
 ---
---- @return multiple
+--- @return number_number_number_number
 function Actor:getdiffuse() end
 
 --- Sets the actor's color/tint - ignores alpha
@@ -1547,7 +1547,7 @@ function Actor:effectmagnitude(x, y, z) end
 ---
 --- |since_itg|
 ---
---- @return multiple
+--- @return number_number_number
 function Actor:geteffectmagnitude() end
 
 --- Disableds effects and instead uses an actor command/hook to draw the actor
