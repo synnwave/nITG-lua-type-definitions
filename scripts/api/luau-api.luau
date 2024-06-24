@@ -71,8 +71,10 @@ return function(jsonData, externalApi, xmlPath)
 		local extending = "" -- classes that extend classes
 		local extendingAnother = "" -- classes that extend extended classes
 		for className, classData in jsonData.classes do
-			local thisOutput = ""
 			local inherits = classData.inherits
+			local startString = `----> CLASS: {className}{if inherits then ` ({inherits})` else ""} <----`
+			local thisOutput = "\n\n" .. startString
+
 			thisOutput ..= `\ndeclare class {className}{if inherits then ` extends {inherits}` else ""}`
 			for method, methodData in classData do
 				if typeof(methodData) ~= "table" then continue end
@@ -80,6 +82,7 @@ return function(jsonData, externalApi, xmlPath)
 			end
 
 			thisOutput ..= `\nend`
+			thisOutput ..= `\n{string.rep("-", startString:len())}`
 			if inherits and jsonData.classes[inherits].inherits then
 				extendingAnother ..= thisOutput
 			elseif inherits then

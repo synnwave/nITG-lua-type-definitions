@@ -1,6 +1,8 @@
+local apiLinks = require("apiLinks")
+
 local function toLuaType(arg, useNil: boolean?): string
 	if arg == "array" then
-		arg = "table<number, any>"
+		arg = "any[]"
 	elseif arg == "table" then
 		arg = "table<any, any>"
 	elseif arg == "void" or arg == "never" or arg == "" or arg == " " then
@@ -16,42 +18,7 @@ local function toLuaType(arg, useNil: boolean?): string
 	return arg or ""
 end
 
-local function stringifyMethod(methodName, methodData, class: string?): string
-	if typeof(methodData) ~= "table" then return "" end
-
-	local args = ""
-	if methodData.args then
-		for _, argData in methodData.args do
-			local argName = argData.name
-			local type = ""
-			if typeof(argData.type) == "string" then
-				type = argData.type
-			else
-				for i, argType in argData.type do
-					type ..= `{if i > 1 then " | " else ""}{toLuaType(argType)}`
-				end
-			end
-			args ..= ` {argName}: {type},`
-		end
-	end
-
-	local returns = ""
-	if methodData.returns then
-		for i, returnType in methodData.returns do
-			returns ..= `{if i > 1 then " | " else ""}{toLuaType(returnType, i > 1)}`
-		end
-	end
-
-	returns = toLuaType(returns)
-	returns = if returns:find(",") then `({returns})` else returns
-	local spacer = if returns:len() > 2 then ": " else ""
-	return `{methodName} fun({if class then `self: {class}{if args:len() > 2 then ", " else ""}` else ""}{args:sub(
-		2,
-		-2
-	)}){spacer}{returns}`
-end
-
-local function stringifyGlobalFunc(funcName, func)
+local function stringifyFunc(funcName, func)
 	local argDeclarations = ""
 	local args = ""
 	if func.args then
@@ -66,23 +33,34 @@ local function stringifyGlobalFunc(funcName, func)
 				end
 			end
 
-			argDeclarations ..= `---@param {argName} {type}`
+			argDeclarations ..= `\n---@param {argName} {type}{if argData.description
+				then ` {argData.description}`
+				else ""}`
 			args ..= ` {argName},`
 		end
 	end
 
 	if func.returns then
-		argDeclarations ..= "\n---@return "
+		local thisReturns = ""
 		if #func.returns > 0 then
 			for i, returnType in func.returns do
-				argDeclarations ..= `{if i > 1 then " | " else ""}{toLuaType(returnType, i > 1)}`
+				thisReturns ..= `{if i > 1 then " | " else ""}{toLuaType(returnType or i > 1)}`
 			end
-		else
-			argDeclarations ..= "nil"
+		end
+		if thisReturns:len() > 1 then
+			argDeclarations ..= "\n---@return " .. thisReturns
 		end
 	end
 
 	return `{argDeclarations}\nfunction {funcName}({args:sub(2, -2)}) end`
+end
+
+local function toApiLink(className)
+	local apiLink = className
+	if apiLinks.aliases[className] then
+		apiLink = `[{className}]({apiLinks.apiRefLink:gsub("{CLASS}", apiLinks.aliases[className])})`
+	end
+	return apiLink
 end
 
 return function(jsonData, externalApi, xmlPath)
@@ -97,7 +75,7 @@ return function(jsonData, externalApi, xmlPath)
 
 			if constantType == "funcs" then
 				for funcName, func in constant do
-					constants ..= `\n\n{stringifyGlobalFunc(funcName, func)}`
+					constants ..= `\n\n{stringifyFunc(funcName, func)}`
 				end
 			end
 		end
@@ -106,15 +84,19 @@ return function(jsonData, externalApi, xmlPath)
 	local classes = "\n\n--> CLASSES"
 	do --> Classes
 		for className, classData in jsonData.classes do
-			local thisOutput = ""
 			local inherits = classData.inherits
-			thisOutput ..= `\n---@class {className}{if inherits then `: {inherits}` else ""}`
+			local startString =
+				`----> CLASS: {toApiLink(className)}{if inherits then ` ({toApiLink(inherits)})` else ""} <----`
+			local thisOutput = "\n\n" .. startString
+
+			thisOutput ..= `\n---@class {className}{if inherits then `: {inherits}` else ""} {toApiLink(className)}`
+			thisOutput ..= `\nlocal {className} = \{}`
 			for method, methodData in classData do
 				if typeof(methodData) ~= "table" then continue end
-				thisOutput ..= `\n---@field {stringifyMethod(method, methodData, className)}`
+				thisOutput ..= `\n{stringifyFunc(`{className}:{method}`, methodData)}`
 			end
 
-			thisOutput ..= `\n\n\n`
+			thisOutput ..= `\n{string.rep("-", startString:len())}`
 			classes ..= thisOutput
 		end
 	end
@@ -126,7 +108,7 @@ return function(jsonData, externalApi, xmlPath)
 	end
 
 	for funcName, func in externalApi.funcs do
-		externalApiConstants ..= `\n\n{stringifyGlobalFunc(funcName, func)}`
+		externalApiConstants ..= `\n\n{stringifyFunc(funcName, func)}`
 	end
 
 	--> XML Data

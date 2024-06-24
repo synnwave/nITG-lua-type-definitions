@@ -47,6 +47,8 @@ local outputData = {
 }
 
 local root = "scripts/api/"
+if not fs.isDir(root .. "json") then fs.writeDir(root .. "json") end
+
 for _, file in fs.readDir(root .. "lua") do
 	local filePath = root .. `lua/{file}`
 	local cachedJSONPath = root .. `json/{file}.json`
